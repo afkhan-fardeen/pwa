@@ -1,0 +1,45 @@
+/** Calendar date as YYYY-MM-DD (UTC components). */
+export function formatYmdUtc(d: Date): string {
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+export function parseYmdToUtcDate(ymd: string): Date {
+  const [y, m, d] = ymd.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+export function todayYmdLocal(): string {
+  const n = new Date();
+  const y = n.getFullYear();
+  const m = String(n.getMonth() + 1).padStart(2, "0");
+  const d = String(n.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+/** `YYYY-MM` calendar month to inclusive UTC date range (matches `daily_logs.date` storage). */
+export function monthYyyyMmToRange(ym: string): { fromYmd: string; toYmd: string } | null {
+  const m = /^(\d{4})-(\d{2})$/.exec(ym.trim());
+  if (!m) return null;
+  const y = Number(m[1]);
+  const mo = Number(m[2]);
+  if (mo < 1 || mo > 12) return null;
+  const fromYmd = `${y}-${String(mo).padStart(2, "0")}-01`;
+  const lastDay = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+  const toYmd = `${y}-${String(mo).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
+  return { fromYmd, toYmd };
+}
+
+/** Iterate each YYYY-MM-DD from `fromYmd` through `toYmd` (inclusive), UTC. */
+export function eachYmdInRangeUtc(fromYmd: string, toYmd: string): string[] {
+  const out: string[] = [];
+  let d = parseYmdToUtcDate(fromYmd);
+  const end = parseYmdToUtcDate(toYmd);
+  while (d.getTime() <= end.getTime()) {
+    out.push(formatYmdUtc(d));
+    d = new Date(d.getTime() + 86400000);
+  }
+  return out;
+}

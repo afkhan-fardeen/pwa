@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "avatar_cloudinary_public_id" varchar(512);

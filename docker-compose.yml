@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: halqa-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: halqa
+      POSTGRES_PASSWORD: halqa_dev_password
+      POSTGRES_DB: halqa
+    volumes:
+      - halqa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U halqa -d halqa"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  halqa_pgdata:

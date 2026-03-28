@@ -1,0 +1,81 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Users,
+  FileSpreadsheet,
+  Bell,
+  UserPlus,
+  CircleDollarSign,
+  BarChart3,
+  Megaphone,
+  UserCircle,
+} from "lucide-react";
+import { List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+
+const nav = [
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/profile", label: "Profile", icon: UserCircle },
+  {
+    href: "/dashboard/registrations",
+    label: "Registrations",
+    icon: UserPlus,
+  },
+  {
+    href: "/dashboard/aiyanat",
+    label: "Aiyanat",
+    icon: CircleDollarSign,
+  },
+  { href: "/dashboard/members", label: "Members", icon: Users },
+  {
+    href: "/dashboard/reports/monthly",
+    label: "Monthly report",
+    icon: BarChart3,
+  },
+  {
+    href: "/dashboard/submissions",
+    label: "Submissions",
+    icon: FileSpreadsheet,
+  },
+  { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
+  {
+    href: "/dashboard/notifications/compose",
+    label: "Notify members",
+    icon: Megaphone,
+  },
+] as const;
+
+export function DashboardSidebarNav() {
+  const pathname = usePathname();
+
+  return (
+    <List component="nav" dense sx={{ px: 1, py: 1 }}>
+      {nav.map(({ href, label, icon: Icon }) => {
+        const active =
+          href === "/dashboard"
+            ? pathname === "/dashboard"
+            : href === "/dashboard/notifications"
+              ? pathname === "/dashboard/notifications"
+              : href === "/dashboard/profile"
+                ? pathname === "/dashboard/profile"
+                : pathname.startsWith(href);
+        return (
+          <ListItemButton
+            key={href}
+            component={Link}
+            href={href}
+            selected={active}
+            sx={{ borderRadius: 1, mb: 0.25 }}
+          >
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <Icon className="size-4 shrink-0" aria-hidden />
+            </ListItemIcon>
+            <ListItemText primary={label} primaryTypographyProps={{ fontWeight: active ? 700 : 500 }} />
+          </ListItemButton>
+        );
+      })}
+    </List>
+  );
+}

@@ -1,0 +1,68 @@
+"use client";
+
+import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { Box } from "@mui/material";
+
+export function NotificationTypeIcon({ type }: { type: string }) {
+  const t = type.toLowerCase();
+  let Icon = NotificationsNoneOutlinedIcon;
+  let bg = "rgba(217, 119, 6, 0.16)";
+  let fg = "#D97706";
+
+  if (t.includes("reject")) {
+    Icon = CancelOutlinedIcon;
+    bg = "rgba(239, 68, 68, 0.14)";
+    fg = "#DC2626";
+  } else if (t.includes("approv")) {
+    Icon = CheckCircleOutlineIcon;
+    bg = "rgba(34, 197, 94, 0.14)";
+    fg = "#16A34A";
+  } else if (t.includes("reminder")) {
+    Icon = NotificationsNoneOutlinedIcon;
+    bg = "rgba(217, 119, 6, 0.18)";
+    fg = "#D97706";
+  } else if (t.includes("welcome") || t.includes("demo")) {
+    Icon = AutoAwesomeOutlinedIcon;
+    bg = "rgba(120, 113, 108, 0.14)";
+    fg = "#78716C";
+  } else if (t.includes("password")) {
+    Icon = LockOutlinedIcon;
+    bg = "rgba(59, 130, 246, 0.12)";
+    fg = "#2563EB";
+  } else if (t.includes("deactivat")) {
+    Icon = BlockOutlinedIcon;
+    bg = "rgba(107, 114, 128, 0.16)";
+    fg = "#4B5563";
+  } else if (t.includes("staff_announcement") || t.includes("announcement")) {
+    Icon = CampaignOutlinedIcon;
+    bg = "rgba(21, 101, 192, 0.12)";
+    fg = "#1565c0";
+  }
+
+  return (
+    <Box
+      sx={{
+        width: 44,
+        height: 44,
+        borderRadius: "50%",
+        flexShrink: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: bg,
+        color: fg,
+        border: 1,
+        borderColor: "divider",
+      }}
+      aria-hidden
+    >
+      <Icon sx={{ fontSize: 22 }} />
+    </Box>
+  );
+}
