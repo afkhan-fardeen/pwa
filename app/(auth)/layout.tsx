@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     <div className={`${dmSans.variable} ${poppins.variable}`}>
       <MemberStyleRoot>
         <div
-          className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden px-4 py-10 sm:px-6 sm:py-12"
+          className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden px-4 pb-10 pt-[max(2.5rem,env(safe-area-inset-top))] sm:px-6 sm:pb-12 sm:pt-[max(3rem,env(safe-area-inset-top))]"
           style={{
             fontFamily:
               'var(--font-member-body), "DM Sans", system-ui, sans-serif',

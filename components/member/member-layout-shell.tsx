@@ -41,7 +41,7 @@ export function MemberLayoutShell({ children }: { children: ReactNode }) {
             width: "100%",
             borderBottom: 1,
             ...memberFogBarSx,
-            pt: "max(4px, env(safe-area-inset-top))",
+            pt: "max(0px, env(safe-area-inset-top, 0px))",
           }}
         >
           <Box

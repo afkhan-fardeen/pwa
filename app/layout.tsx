@@ -20,10 +20,17 @@ const fontMono = Geist_Mono({
   display: "swap",
 });
 
+/** Match `app/manifest.ts` theme_color for browser chrome + Android task switcher. */
+const THEME_LIGHT = "#4338ca";
+const THEME_DARK = "#312e81";
+
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#1565c0" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d47a1" },
+    { media: "(prefers-color-scheme: light)", color: THEME_LIGHT },
+    { media: "(prefers-color-scheme: dark)", color: THEME_DARK },
   ],
 };
 
@@ -35,9 +42,13 @@ export const metadata: Metadata = {
   description:
     "Qalbee — daily worship, outreach, and contributions for your community.",
   applicationName: "Qalbee",
+  formatDetection: {
+    telephone: false,
+  },
   appleWebApp: {
     capable: true,
     title: "Qalbee",
+    // Opaque status bar; works with light UI + viewport-fit=cover + safe-area padding.
     statusBarStyle: "default",
   },
 };
@@ -49,7 +60,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en" dir="ltr" className={`${roboto.variable} ${fontMono.variable} h-full`}>
-      <body className={`${roboto.className} bg-[#f5f5f5] text-gray-900 min-h-full flex flex-col`}>
+      <body
+        className={`${roboto.className} bg-[#f5f5f5] text-gray-900 min-h-dvh flex flex-col antialiased [padding-left:env(safe-area-inset-left)] [padding-right:env(safe-area-inset-right)]`}
+      >
         <MuiAppProvider>
           <RegisterServiceWorker />
           <SwUpdatePrompt />

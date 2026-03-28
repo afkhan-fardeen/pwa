@@ -49,8 +49,24 @@ export function DashboardLayoutClient({
         </Box>
       </Paper>
       <Box sx={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
-        <AppBar position="sticky" color="inherit" elevation={1} sx={{ display: { md: "none" } }}>
-          <Toolbar>
+        <AppBar
+          position="sticky"
+          color="inherit"
+          elevation={1}
+          sx={{
+            display: { md: "none" },
+            pt: "env(safe-area-inset-top, 0px)",
+          }}
+        >
+          <Toolbar
+            disableGutters
+            sx={{
+              px: 2,
+              gap: 1,
+              alignItems: "center",
+              minHeight: { xs: 56, sm: 64 },
+            }}
+          >
             <Typography variant="subtitle1" fontWeight={800} sx={{ flex: 1 }}>
               Dashboard
             </Typography>
